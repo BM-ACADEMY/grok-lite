@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 export default function Home() {
@@ -40,25 +40,77 @@ export default function Home() {
 
       {chat.map((c, i) => (
         <div key={i} style={{ marginBottom: 12 }}>
-          <div><strong>You:</strong> {c.you}</div>
-          <div><strong>Me:</strong> {c.me}</div>
+          <div>
+            <strong>You:</strong> {c.you}
+          </div>
+          <div>
+            <strong>Me:</strong> {c.me}
+          </div>
         </div>
       ))}
 
-      <div style={{ marginTop: 12 }}>
+      <div
+        style={{
+          marginTop: 20,
+          display: "flex",
+          gap: "10px",
+          alignItems: "center",
+        }}
+      >
         <input
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
           placeholder="Ask me…"
-          style={{ marginRight: 8, padding: 8, width: "60%" }}
-          onKeyDown={(e) => { if (e.key === "Enter") ask(); }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") ask();
+          }}
+          style={{
+            flex: 1,
+            padding: "12px 15px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            fontSize: "15px",
+            outline: "none",
+            transition: "0.2s",
+          }}
+          onFocus={(e) => {
+            e.target.style.border = "1px solid #4A90E2";
+            e.target.style.boxShadow = "0 0 4px rgba(74,144,226,0.4)";
+          }}
+          onBlur={(e) => {
+            e.target.style.border = "1px solid #ccc";
+            e.target.style.boxShadow = "none";
+          }}
         />
-        <button onClick={ask} disabled={loading}>
+
+        <button
+          onClick={ask}
+          disabled={loading}
+          style={{
+            padding: "12px 20px",
+            borderRadius: "8px",
+            backgroundColor: loading ? "#bbb" : "#4A90E2",
+            color: "white",
+            fontSize: "15px",
+            fontWeight: "bold",
+            cursor: loading ? "not-allowed" : "pointer",
+            border: "none",
+            transition: "0.2s",
+          }}
+          onMouseEnter={(e) => {
+            if (!loading) e.currentTarget.style.backgroundColor = "#357ABD";
+          }}
+          onMouseLeave={(e) => {
+            if (!loading) e.currentTarget.style.backgroundColor = "#4A90E2";
+          }}
+        >
           {loading ? "Thinking…" : "Send"}
         </button>
       </div>
 
-      {error && <div style={{ color: "red", marginTop: 8 }}>Error: {error}</div>}
+      {error && (
+        <div style={{ color: "red", marginTop: 8 }}>Error: {error}</div>
+      )}
     </div>
   );
 }
